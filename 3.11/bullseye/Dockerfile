@@ -1,17 +1,17 @@
-#
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
-#
-# PLEASE DO NOT EDIT IT DIRECTLY.
-#
-
-FROM buildpack-deps:bullseye
+#  기존에 Ubuntu 를 base 로 하는 이미지에서 base image 만 nvidia 이미지로 스왑
+FROM nvidia/cuda:12.3.1-devel-ubuntu22.04
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
-
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
+
+# Docker Image 상에서는 timezone 을 설정되지 않아 apt-get 단계에서 넘어가지 않는 케이스가 존재
+ENV TZ Asia/Seoul
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+  && echo $TZ > /etc/timezone
 
 # runtime dependencies
 RUN set -eux; \
@@ -20,6 +20,8 @@ RUN set -eux; \
 		libbluetooth-dev \
 		tk-dev \
 		uuid-dev \
+        wget \
+        libssl-dev openssl \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
