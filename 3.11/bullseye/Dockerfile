@@ -1,5 +1,5 @@
 #  기존에 Ubuntu 를 base 로 하는 이미지에서 base image 만 nvidia 이미지로 스왑
-FROM nvidia/cuda:12.3.1-devel-ubuntu22.04
+FROM --platform=linux/x86_64 nvidia/cuda:12.3.1-devel-ubuntu22.04
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
