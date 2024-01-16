@@ -22,6 +22,8 @@ RUN set -eux; \
 		uuid-dev \
         wget \
         libssl-dev openssl \
+        libgl1-mesa-glx libffi-dev \
+        libbz2-dev \
 	; \
 	rm -rf /var/lib/apt/lists/*
 

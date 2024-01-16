@@ -76,7 +76,7 @@ def get_target_dockerfiles(build_all: bool):
 
 
 if __name__ == '__main__':
-    target_dockerfiles = []
+    target_dockerfiles = get_target_dockerfiles(os.environ.get("build_all", False))
     docker_login_cmd = (f"aws ecr get-login-password --region {REGION}"
                         f" | docker login --username AWS --password-stdin {ECR_REGISTRY}")
     print("asyncio.run(run_command_with_env(docker_login_cmd, {}))")
